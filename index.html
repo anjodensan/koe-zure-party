@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>こえズレパーティー</title>
+    <meta name="theme-color" content="#ffd83d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="こえズレ" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/icon-180.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="control-panel" aria-labelledby="app-title">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">Delayed Voice Party</p>
+            <h1 id="app-title">こえズレパーティー</h1>
+          </div>
+          <div class="status-pill" id="audioStatus">停止中</div>
+        </div>
+
+        <div class="audio-hero">
+          <button class="main-button" id="toggleAudio" type="button">
+            <span class="button-icon" aria-hidden="true">▶</span>
+            <span>こえズレ開始</span>
+          </button>
+          <div class="meter" aria-label="マイク入力レベル">
+            <span id="meterBar"></span>
+          </div>
+        </div>
+
+        <div class="warning">
+          イヤホンかヘッドホン推奨。<br />
+          スピーカーで使うとハウリングしやすいです。<br />
+          サウンドは、自分の声が聞こえないくらいの音量を推奨します。耳が痛くならない音量で遊んでください。
+        </div>
+
+        <div class="settings-grid">
+          <section class="setting delay-setting" aria-label="こえズレプリセット">
+            <span>こえズレ</span>
+            <strong><output id="delayValue">200</output> ms</strong>
+            <div class="quick-presets">
+              <button type="button" data-delay="80">かるめ</button>
+              <button type="button" data-delay="200" class="active">定番</button>
+              <button type="button" data-delay="350">むずかしい</button>
+            </div>
+          </section>
+
+          <label class="setting">
+            <span>声の音量</span>
+            <strong><output id="voiceValue">80</output>%</strong>
+            <input id="voiceSlider" type="range" min="0" max="120" step="5" value="80" />
+          </label>
+
+          <label class="setting">
+            <span>サウンド</span>
+            <strong><output id="maskValue">35</output>%</strong>
+            <input id="maskSlider" type="range" min="0" max="100" step="5" value="35" />
+          </label>
+
+          <label class="setting">
+            <span>音の種類</span>
+            <select id="maskType">
+              <option value="none">なし</option>
+              <option value="music" selected>メロディ</option>
+              <option value="noise">砂嵐ノイズ</option>
+            </select>
+          </label>
+        </div>
+
+      </section>
+
+      <section class="game-panel" aria-labelledby="game-title">
+        <div class="game-head">
+          <div>
+            <p class="eyebrow">Game</p>
+            <h2 id="game-title">パーティーゲーム</h2>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <p class="option-label">難易度</p>
+          <div class="game-selector" id="modeButtons" aria-label="難易度選択"></div>
+        </div>
+
+        <div class="option-group">
+          <p class="option-label">制限時間</p>
+          <div class="time-selector" id="timeButtons" aria-label="制限時間選択">
+            <button type="button" data-seconds="10">10秒</button>
+            <button type="button" data-seconds="20">20秒</button>
+            <button type="button" data-seconds="30" class="active">30秒</button>
+          </div>
+        </div>
+
+        <div class="prompt-stage">
+          <div class="prompt-card" id="promptCard">
+            <p class="prompt-kicker">プレイヤーだけ見てください</p>
+            <p class="prompt-text" id="promptText">ここにお題が表示されます</p>
+            <p class="ng-line" id="ngLine" hidden></p>
+            <p class="prompt-rule" id="promptRule">こえズレ音声を聞きながら、お題を説明します。</p>
+          </div>
+          <div class="mic-panel" id="micPanel" data-state="off" aria-live="polite">
+            <span class="mic-dot" aria-hidden="true"></span>
+            <div>
+              <strong id="micState">マイク未接続</strong>
+              <span id="micHint">スタートで自動的に音声ディレイを開始します</span>
+            </div>
+          </div>
+          <p class="answer-line" id="answerLine" hidden></p>
+          <div class="prompt-controls">
+            <button class="timer-button" type="button" id="timerButton" aria-live="polite" disabled>30秒スタート</button>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" id="prevPrompt" disabled hidden>前のお題</button>
+          <button type="button" id="nextPrompt" class="primary-action">はじめる</button>
+        </div>
+
+        <p class="game-note">うまくお題を伝えられた人と回答できた人に1ポイント！</p>
+        <div class="scoreboard" id="playersBoard"></div>
+        <div class="score-actions">
+          <button type="button" id="addPlayer">プレイヤー追加</button>
+          <button type="button" id="removePlayer" disabled>プレイヤーを減らす</button>
+          <button type="button" id="resetScore">リセット</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
