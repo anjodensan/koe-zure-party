@@ -1,4 +1,4 @@
-const CACHE_NAME = "koe-zure-party-v1";
+const CACHE_NAME = "koe-zure-party-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
